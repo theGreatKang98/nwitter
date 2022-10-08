@@ -4,6 +4,7 @@ import Auth from "routes/Auth";
 import Home from "routes/Home";
 
 const AppRouter = ({isLoggIn}) =>{
+    console.log("sex", isLoggIn);
     return (
         <Router>
             <Routes>
