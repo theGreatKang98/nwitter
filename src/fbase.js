@@ -2,8 +2,11 @@ import * as firebase from "firebase/app";
 import { initializeApp } from "firebase/app";
 import {
   getAuth,
+  signInWithPopup,
   signInWithEmailAndPassword,
   createUserWithEmailAndPassword,
+  GoogleAuthProvider,
+  GithubAuthProvider,
 }  from 'firebase/auth';
 
 
@@ -18,9 +21,13 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig);
 
+export const firebaseInstance = firebase;
 
 export  {
   getAuth,
+  signInWithPopup,
   signInWithEmailAndPassword,
   createUserWithEmailAndPassword,
+  GoogleAuthProvider,
+  GithubAuthProvider,
 } ;
