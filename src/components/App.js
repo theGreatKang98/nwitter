@@ -3,13 +3,14 @@ import AppRouter from "components/Router";
 import { getAuth } from "fbase";
 
 function App() {
-  const auth = getAuth().currentUser;
-
+  //let userInfo ;
+  let userInfo = getAuth().currentUser;
   const [init, setInit] = useState(false);
   const [isLoggIn, setIsLoggedIn] = useState(false);
   useEffect(() => {
     getAuth().onAuthStateChanged((user) => {
       if (user) {
+        userInfo = user;
         setIsLoggedIn(true);
       } else {
         setIsLoggedIn(false);
@@ -20,7 +21,7 @@ function App() {
 
   return (
     <>
-      {init ? <AppRouter isLoggIn={isLoggIn} /> : "Initializing..."}
+      {init ? <AppRouter isLoggIn={isLoggIn} user={userInfo}/> : "Initializing..."}
     </>
   );
 }
