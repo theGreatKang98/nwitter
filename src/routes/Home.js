@@ -2,6 +2,7 @@ import Ract, { useEffect } from "react";
 import { useState } from "react";
 import { dbService } from "fbase";
 import { addDoc, collection, orderBy, onSnapshot, query } from "firebase/firestore";
+import Nweet from "components/Nweet";
 
 
 const Home = ({ user }) => {
@@ -50,14 +51,9 @@ const Home = ({ user }) => {
                 </form>
             </div>
 
-            {nweets.map((e) => {
-                console.log(e);
-                return(
-                <div key={e.id}>
-                    <h3 > {e.text} </h3>
-                </div>)
-
-            })}
+            {nweets.map((nweetInfo) => (
+               <Nweet key={nweetInfo.id} currentUid={currentUid} nweetInfo={nweetInfo}/>)
+            )}
 
         </>)
 
