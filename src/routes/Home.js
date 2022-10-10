@@ -1,21 +1,59 @@
 import Ract, { useEffect } from "react";
 import { useState } from "react";
-import { dbService } from "fbase";
+import { dbService, storageService } from "fbase";
 import { addDoc, collection, orderBy, onSnapshot, query } from "firebase/firestore";
 import Nweet from "components/Nweet";
+import { v4 as uuidv4 } from 'uuid';
+import { ref, uploadString } from "firebase/storage";
 
 
 const Home = ({ user }) => {
     const [nweets, setNweets] = useState([]);
     const currentUid = user.uid;
+    const [nweet, setNweet] = useState('');
+    const [attachment, setattachment] = useState();
+
+    const onImgChange = (event) => {
+        const { target: { files } } = event;
+        const theFile = files[0];
+        const reader = new FileReader();
+        reader.onloadend = (finishedEvent) => {
+            console.log(finishedEvent);
+            const { target: { result } } = finishedEvent;
+            setattachment(result);
+        }
+        reader.readAsDataURL(theFile);
+    }
+
+    const onSubmit = async (event) => {
+        event.preventDefault();
+        // try {
+        //     await addDoc(collection(dbService, "nweets"), {
+        //         uid: currentUid,
+        //         text: nweet,
+        //         createdAt: Date.now(),
+        //     });
+        // } catch (error) {
+        //     console.error(error);
+        // }
+        // setNweet('');
+        const fileRef = ref(storageService, `${currentUid}/${uuidv4()}`);
+        const response = await uploadString(fileRef, attachment, "data_url");
+        console.log(response);
+    }
+
+    const onChangeNweet = (event) => {
+        const { target: { value } } = event;
+        setNweet(value);
+    }
 
     useEffect(() => {
         const q = query(
             collection(dbService, "nweets"),
             orderBy("createdAt", "desc")
         );
-         onSnapshot(q, (snapshot) => {
-             const nweetArr =  snapshot.docs.map((doc) => ({
+        onSnapshot(q, (snapshot) => {
+            const nweetArr = snapshot.docs.map((doc) => ({
                 id: doc.id,
                 ...doc.data(),
             }));
@@ -23,36 +61,23 @@ const Home = ({ user }) => {
         });
     }, []);
 
-
-    const onSubmit = async (event) => {
-        event.preventDefault();
-        try {
-            await addDoc(collection(dbService, "nweets"), {
-                uid: currentUid,
-                text: nweet,
-                createdAt: Date.now(),
-            });
-        } catch (error) {
-            console.error(error);
-        }
-        setNweet('');
-    }
-    const [nweet, setNweet] = useState('');
-    const onChangeNweet = (event) => {
-        const { target: { value } } = event;
-        setNweet(value);
-    }
     return (
         <>
             <div>
                 <form onSubmit={onSubmit}>
                     <input type="text" onChange={onChangeNweet} placeholder="What's on your mind" value={nweet} />
+                    <input type="file" accept="image/*" onChange={onImgChange} />
                     <input type="submit" value="Nweet" />
                 </form>
+                {attachment &&
+                    <div>
+                        <img src={attachment} width="50px" height="50px" />
+                        <input type="button" value="clear img" onClick={() => setattachment(null)} />
+                    </div>}
             </div>
 
             {nweets.map((nweetInfo) => (
-               <Nweet key={nweetInfo.id} currentUid={currentUid} nweetInfo={nweetInfo}/>)
+                <Nweet key={nweetInfo.id} currentUid={currentUid} nweetInfo={nweetInfo} />)
             )}
 
         </>)

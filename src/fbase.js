@@ -9,6 +9,7 @@ import {
   GithubAuthProvider,
 }  from 'firebase/auth';
 import {  getFirestore } from "firebase/firestore";
+import {getStorage} from "firebase/storage";
 // import {Firestore} from "firebase/firestore";
 
 
@@ -36,3 +37,4 @@ export {
 } ;
 
 export const dbService = getFirestore();
+export const storageService = getStorage();

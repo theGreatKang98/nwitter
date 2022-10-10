@@ -43,6 +43,7 @@ const Nweet = ({ currentUid, nweetInfo }) => {
                 <>
                     <form onSubmit={onSubmit}>
                         <input type="text" onChange={onEditChange} placeholder="edit nweet" value={editingNweet} required />
+                        <input type="file" accept="image/*" />
                         <input type="submit" value="edit" />
                     </form>
                     <input type="button" value="cancel" onClick={onEditToggleClick} />
