@@ -1,18 +1,21 @@
-import { dbService } from "fbase";
+import { dbService, storageService } from "fbase";
 import { deleteDoc, doc, updateDoc } from "firebase/firestore";
+import { deleteObject, ref } from "firebase/storage";
 import { useState } from "react";
 
 
 const Nweet = ({ currentUid, nweetInfo }) => {
+    console.log(ref(storageService,nweetInfo.attachmentURL));
     const [isEditing, setIsEditing] = useState(false);
     const [editingNweet, setEditingNweet] = useState(nweetInfo.text);
 
     // 느윗 삭제
-    const onDeleteClick = () => {
+    const onDeleteClick = async() => {
         const userConfirm = window.confirm('delete nweet?');
         if (userConfirm) {
             try {
-                deleteDoc(doc(dbService, `nweets/${nweetInfo.id}`));
+                await deleteDoc(doc(dbService, `nweets/${nweetInfo.id}`));
+                await deleteObject(ref(storageService, nweetInfo.attachmentURL));
             } catch (error) {
                 console.log(error);
 
@@ -48,7 +51,8 @@ const Nweet = ({ currentUid, nweetInfo }) => {
                     </form>
                     <input type="button" value="cancel" onClick={onEditToggleClick} />
                 </>) : (
-                <>
+                <>  {nweetInfo.attachmentURL && (
+                <img src={nweetInfo.attachmentURL} width="50px" height="50px"/>)}
                     <h3 > {nweetInfo.text} </h3>
                     {
                         currentUid === nweetInfo.uid && (
