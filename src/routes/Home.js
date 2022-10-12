@@ -11,9 +11,9 @@ const Home = ({ user }) => {
     const [nweets, setNweets] = useState([]);
     const currentUid = user.uid;
     const [nweet, setNweet] = useState('');
-    const [attachment, setattachment] = useState('');
+    const [attachment, setAttachment] = useState('');
 
-    const clearAttachment = () => setattachment(null)
+    const clearAttachment = () => setAttachment(null)
 
     const onUploadAttachment = (event) => {
         const { target: { files } } = event;
@@ -21,7 +21,7 @@ const Home = ({ user }) => {
         const reader = new FileReader();
         reader.onloadend = (finishedEvent) => {
             const { target: { result } } = finishedEvent;
-            setattachment(result);
+            setAttachment(result);
         }
         reader.readAsDataURL(theFile);
     }

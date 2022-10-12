@@ -5,7 +5,7 @@ import { useState } from "react";
 
 
 const Nweet = ({ currentUid, nweetInfo }) => {
-    console.log(ref(storageService,nweetInfo.attachmentURL));
+    //console.log(ref(storageService,nweetInfo.attachmentURL));
     const [isEditing, setIsEditing] = useState(false);
     const [editingNweet, setEditingNweet] = useState(nweetInfo.text);
 

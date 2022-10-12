@@ -8,14 +8,14 @@ import Navigation from "components/Navigation";
 const AppRouter = ({isLoggIn,user}) =>{
     return (
         <Router>
-            {isLoggIn && <Navigation /> }
+            {isLoggIn && <Navigation user={user}/> }
             <Routes>
                 {isLoggIn ?(
                     <>
                         <Route exact path="/" element={<Home user={user}/>}>
                             {/* <Home/> */}
                         </Route>
-                        <Route exact path="/profile" element={<Profile/>}>
+                        <Route exact path="/profile" element={<Profile user={user}/>}>
                             {/* <Home/> */}
                         </Route>
                     </>)
