@@ -4,12 +4,13 @@ import { useNavigate } from "react-router-dom";
 import { collection, doc, getDocs, onSnapshot, orderBy, query, where } from "firebase/firestore";
 import { updateProfile } from "firebase/auth";
 
-const Profile = ({ user }) => {
+const Profile = ({ user, refreshUserObj}) => {
     const navigate = useNavigate();
     const onSignOutClick = () => {
         getAuth().signOut()
         navigate('/');
     };
+
 
     const [newDisplayName, SetNewDisplayName] = useState(user.displayName ?? '');
 
@@ -33,16 +34,16 @@ const Profile = ({ user }) => {
     const onSubmit = async (event) => {
         event.preventDefault();
         if (user.displayName !== newDisplayName) {
-            await updateProfile(user,{
+            await updateProfile(getAuth().currentUser, {
                 displayName: newDisplayName,
             });
+            refreshUserObj();
         }
     }
 
     useEffect(() => {
         getMyNweets()
-    },
-        [])
+    },[])
 
     return (
         <>

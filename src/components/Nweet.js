@@ -4,7 +4,7 @@ import { deleteObject, ref } from "firebase/storage";
 import { useState } from "react";
 
 
-const Nweet = ({ currentUid, nweetInfo }) => {
+const Nweet = ({ user, nweetInfo }) => {
     //console.log(ref(storageService,nweetInfo.attachmentURL));
     const [isEditing, setIsEditing] = useState(false);
     const [editingNweet, setEditingNweet] = useState(nweetInfo.text);
@@ -55,7 +55,7 @@ const Nweet = ({ currentUid, nweetInfo }) => {
                 <img src={nweetInfo.attachmentURL} width="50px" height="50px"/>)}
                     <h3 > {nweetInfo.text} </h3>
                     {
-                        currentUid === nweetInfo.uid && (
+                        user.uid === nweetInfo.uid && (
                             <>
                                 <button onClick={onDeleteClick}>Delete Nweet</button>
                                 <button onClick={onEditToggleClick}> Edit Nweet</button>

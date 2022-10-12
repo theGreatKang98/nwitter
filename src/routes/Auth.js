@@ -27,7 +27,6 @@ const Auth = () => {
             } else {
                  data = await signInWithEmailAndPassword(auth, email, password);
             }
-            console.log("auth data",data);
         } catch(error){
             setError(error.message);
         }

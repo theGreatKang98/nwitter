@@ -9,7 +9,6 @@ import { getDownloadURL, ref, uploadString } from "firebase/storage";
 
 const Home = ({ user }) => {
     const [nweets, setNweets] = useState([]);
-    const currentUid = user.uid;
     const [nweet, setNweet] = useState('');
     const [attachment, setAttachment] = useState('');
 
@@ -32,7 +31,7 @@ const Home = ({ user }) => {
         setNweet('');
         clearAttachment();
         if (attachment) {
-            const fileRef = ref(storageService, `${currentUid}/${uuidv4()}`);
+            const fileRef = ref(storageService, `${user.uid}/${uuidv4()}`);
             const response = await uploadString(fileRef, attachment, "data_url");
             await getDownloadURL(response.ref).then((url) => {
                 attachmentURL = url;
@@ -40,7 +39,7 @@ const Home = ({ user }) => {
         }
         try {
             await addDoc(collection(dbService, "nweets"), {
-                uid: currentUid,
+                uid: user.uid,
                 text: nweet,
                 attachmentURL,
                 createdAt: Date.now(),
@@ -88,7 +87,7 @@ const Home = ({ user }) => {
 
             {nweets.map((nweetInfo) => (
                 
-                <Nweet key={nweetInfo.id} currentUid={currentUid} nweetInfo={nweetInfo} />)
+                <Nweet key={nweetInfo.id} user={user} nweetInfo={nweetInfo} />)
             )}
 
         </>)
