@@ -22,10 +22,9 @@ function App() {
     })
   }, [])
   const refreshUserObj =  ()=>{
-    setUserObj({
-      displayName: getAuth().currentUser.displayName,
-      uid: userObj.uid,
-    });
+    let userObjCopy = {...userObj};
+    userObjCopy.displayName = getAuth().currentUser.displayName;
+    setUserObj(userObjCopy);
   }
 
   return (

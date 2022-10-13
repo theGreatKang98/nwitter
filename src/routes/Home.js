@@ -86,7 +86,6 @@ const Home = ({ user }) => {
             </div>
 
             {nweets.map((nweetInfo) => (
-                
                 <Nweet key={nweetInfo.id} user={user} nweetInfo={nweetInfo} />)
             )}
 

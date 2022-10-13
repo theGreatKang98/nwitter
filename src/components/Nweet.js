@@ -40,6 +40,7 @@ const Nweet = ({ user, nweetInfo }) => {
         setIsEditing((prev) => !prev)
     );
 
+    console.log('nweet is called');
     return (
         <div > {
             isEditing ? (

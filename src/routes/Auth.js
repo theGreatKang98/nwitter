@@ -19,19 +19,16 @@ const Auth = () => {
     const onSubmit = async (event) => {
         event.preventDefault();
         try{
-            let data ;
             if(newAccount){
-                 data = await createUserWithEmailAndPassword(
+                 await createUserWithEmailAndPassword(
                     auth, email, password
                 )
             } else {
-                 data = await signInWithEmailAndPassword(auth, email, password);
+                 await signInWithEmailAndPassword(auth, email, password);
             }
         } catch(error){
             setError(error.message);
         }
-        
-
     }
     const toggleAccount = ()=>{
         setNewAccount((prev) => !prev)
@@ -45,8 +42,7 @@ const Auth = () => {
         } else if(name === 'github'){
             provider = new GithubAuthProvider();
         }
-        const data = await signInWithPopup(getAuth(),provider);
-        console.log(data);
+        await signInWithPopup(getAuth(),provider);
     }
 
     return (
