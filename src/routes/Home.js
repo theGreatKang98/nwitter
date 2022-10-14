@@ -1,10 +1,11 @@
-import Ract, { useEffect } from "react";
+import { useEffect } from "react";
 import { useState } from "react";
 import { dbService, storageService } from "fbase";
 import { addDoc, collection, orderBy, onSnapshot, query } from "firebase/firestore";
 import Nweet from "components/Nweet";
 import { v4 as uuidv4 } from 'uuid';
 import { getDownloadURL, ref, uploadString } from "firebase/storage";
+
 
 
 const Home = ({ user }) => {
@@ -72,9 +73,9 @@ const Home = ({ user }) => {
 
     return (
         <>
-            <div>
+            <div className="App">
                 <form onSubmit={onSubmit}>
-                    <input type="text" onChange={onChangeNweet} placeholder="What's on your mind" value={nweet} required/>
+                    <input className="btn" type="text" onChange={onChangeNweet} placeholder="What's on your mind" value={nweet} required/>
                     <input type="file" accept="image/*" onChange={onUploadAttachment} />
                     <input type="submit" value="Nweet" />
                 </form>
