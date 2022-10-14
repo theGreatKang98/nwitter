@@ -1,19 +1,24 @@
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { useState } from "react";
 import { dbService, storageService } from "fbase";
 import { addDoc, collection, orderBy, onSnapshot, query } from "firebase/firestore";
 import Nweet from "components/Nweet";
 import { v4 as uuidv4 } from 'uuid';
 import { getDownloadURL, ref, uploadString } from "firebase/storage";
-
+import "style.css"
 
 
 const Home = ({ user }) => {
+    const fileInput = useRef();
+
     const [nweets, setNweets] = useState([]);
     const [nweet, setNweet] = useState('');
     const [attachment, setAttachment] = useState('');
 
-    const clearAttachment = () => setAttachment(null)
+    const clearAttachment = (event) => {
+        setAttachment(null);
+        fileInput.current.value = null;
+    }
 
     const onUploadAttachment = (event) => {
         const { target: { files } } = event;
@@ -41,6 +46,7 @@ const Home = ({ user }) => {
         try {
             await addDoc(collection(dbService, "nweets"), {
                 uid: user.uid,
+                creator: user.displayName,
                 text: nweet,
                 attachmentURL,
                 createdAt: Date.now(),
@@ -49,7 +55,7 @@ const Home = ({ user }) => {
             console.error(error);
         }
     }
-   
+
 
     const onChangeNweet = (event) => {
         const { target: { value } } = event;
@@ -73,16 +79,29 @@ const Home = ({ user }) => {
 
     return (
         <>
-            <div className="App">
+            <div className="container ">
                 <form onSubmit={onSubmit}>
-                    <input className="btn" type="text" onChange={onChangeNweet} placeholder="What's on your mind" value={nweet} required/>
-                    <input type="file" accept="image/*" onChange={onUploadAttachment} />
-                    <input type="submit" value="Nweet" />
-                </form>
-                {attachment &&
+                    <div className="input-group">
+                        <input className="form-control" type="text" onChange={onChangeNweet} placeholder="What's on your mind" value={nweet} required />
+                        <input className="btn btn-primary" type="submit" value="Nweet" />
+                    </div>
+
+                    {/* <div className="input-group">
+                        <input className="mx-auto" type="file" accept="image/*" onChange={onUploadAttachment} />
+                    </div> */}
+
                     <div>
-                        <img src={attachment} width="50px" height="50px" />
-                        <input type="button" value="clear img" onClick={clearAttachment} />
+                        <input className="file-upload-input" ref={fileInput} type='file' onChange={onUploadAttachment} accept="image/*" />
+                        <div className="drag-text">
+                            <h3>Add Photo +</h3>
+                        </div>
+                    </div>
+                </form>
+
+                {attachment &&
+                    <div className="mx-5">
+                        <input className="btn btn-danger border-circle file-delete" type="button" value="X" onClick={clearAttachment} />
+                        <img src={attachment} className="mx-auto d-block preview-img" />
                     </div>}
             </div>
 

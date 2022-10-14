@@ -61,10 +61,12 @@ const Profile = ({ user, refreshUserObj }) => {
     return (
         <>
             <form onSubmit={onSubmit}>
-                <input type="text" placeholder={newDisplayName} onChange={onChangeNewDisplayName} value={newDisplayName} />
-                <input type="submit" value="submit" />
+                <div className="input-group w-50 mx-auto">
+                    <input className="form-control" type="text" placeholder={user.displayName} onChange={onChangeNewDisplayName} value={newDisplayName} />
+                    <input className="btn btn-primary" type="submit" value="submit" />
+                </div>
             </form>
-            <button onClick={onSignOutClick}>Sign Out</button>
+            <button className="btn btn-danger mx-auto d-block" onClick={onSignOutClick}>Sign Out</button>
             {currentUserNweets.map((nweet, index) => (
                 <Nweet key={index} user={user} nweetInfo={nweet} />
             ))}

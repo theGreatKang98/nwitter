@@ -10,7 +10,7 @@ const Nweet = ({ user, nweetInfo }) => {
     const [editingNweet, setEditingNweet] = useState(nweetInfo.text);
 
     // 느윗 삭제
-    const onDeleteClick = async() => {
+    const onDeleteClick = async () => {
         const userConfirm = window.confirm('delete nweet?');
         if (userConfirm) {
             try {
@@ -40,28 +40,42 @@ const Nweet = ({ user, nweetInfo }) => {
         setIsEditing((prev) => !prev)
     );
 
-    console.log('nweet is called');
     return (
-        <div > {
+        <div className="container border rounded " > {
             isEditing ? (
                 <>
                     <form onSubmit={onSubmit}>
-                        <input type="text" onChange={onEditChange} placeholder="edit nweet" value={editingNweet} required />
-                        <input type="file" accept="image/*" />
-                        <input type="submit" value="edit" />
+                        <div className="form-group">
+                            <input className="form-control" type="text" onChange={onEditChange} placeholder="edit nweet" value={editingNweet} required />
+                            {/* <input type="file" accept="image/*" /> */}
+                            <input className="btn btn-outline-primary" type="submit" value="edit" />
+                            <input className="btn btn-outline-danger" type="button" value="cancel" onClick={onEditToggleClick} />
+                        </div>
                     </form>
-                    <input type="button" value="cancel" onClick={onEditToggleClick} />
+
                 </>) : (
-                <>  {nweetInfo.attachmentURL && (
-                <img src={nweetInfo.attachmentURL} width="50px" height="50px"/>)}
-                    <h3 > {nweetInfo.text} </h3>
-                    {
-                        user.uid === nweetInfo.uid && (
-                            <>
-                                <button onClick={onDeleteClick}>Delete Nweet</button>
-                                <button onClick={onEditToggleClick}> Edit Nweet</button>
-                            </>)
-                    }
+                <>
+                    <div>
+                        <div className="d-flex justify-content-between">
+                            <p>{nweetInfo.creator}</p>
+                            {
+                                user.uid === nweetInfo.uid && (
+                                    <>
+                                        <div>
+                                            <button className="btn btn-outline-danger" onClick={onDeleteClick}>Delete Nweet</button>
+                                            <button className="btn btn-outline-info" onClick={onEditToggleClick}> Edit Nweet</button>
+                                        </div>
+                                    </>)
+                            }
+                        </div>
+
+                        <div>
+                            {nweetInfo.attachmentURL && (<img src={nweetInfo.attachmentURL} className="preview-img" />)}
+                            <p className="fs-5"> {nweetInfo.text} </p>
+
+                        </div>
+                    </div>
+
                 </>
             )
 
