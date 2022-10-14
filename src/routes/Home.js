@@ -81,7 +81,7 @@ const Home = ({ user }) => {
         <>
             <div className="container ">
                 <form onSubmit={onSubmit}>
-                    <div className="input-group">
+                    <div className="input-group my-5">
                         <input className="form-control" type="text" onChange={onChangeNweet} placeholder="What's on your mind" value={nweet} required />
                         <input className="btn btn-primary" type="submit" value="Nweet" />
                     </div>
@@ -90,7 +90,7 @@ const Home = ({ user }) => {
                         <input className="mx-auto" type="file" accept="image/*" onChange={onUploadAttachment} />
                     </div> */}
 
-                    <div>
+                    <div className="my-5">
                         <input className="file-upload-input" ref={fileInput} type='file' onChange={onUploadAttachment} accept="image/*" />
                         <div className="drag-text">
                             <h3>Add Photo +</h3>

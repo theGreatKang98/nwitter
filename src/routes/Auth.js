@@ -47,26 +47,29 @@ const Auth = () => {
     }
 
     return (
-        <div className="container col-6 ">
-            <form onSubmit={onSubmit}>
-                <div className="form-group">
-                <label for="emailInput">Email address</label>
-                    <input id="emailInput" className="form-control" name="email" type="text" placeholder="Email" required value={email} onChange={onChange} />
-                </div>
-                <div className="form-group">
-                <label for="passwordInput">password</label>
-                    <input id="passwordInput" className="form-control" name="password" type="password" placeholder="Password" required value={password} onChange={onChange} />
-                </div>
-                <input className="btn btn-primary w-100" type="submit" value={newAccount ? "Create Account" : "Sign In"} />
-                <span>{error}</span>
-            </form>
+        <div className="h-100 d-flex justify-content-center align-items-center">
+            <div className="h-75">
+                <form onSubmit={onSubmit}>
+                    <div className="form-group">
+                        <label for="emailInput">Email address</label>
+                        <input id="emailInput" className="form-control" name="email" type="text" placeholder="Email" required value={email} onChange={onChange} />
+                    </div>
+                    <div className="form-group">
+                        <label for="passwordInput">password</label>
+                        <input id="passwordInput" className="form-control" name="password" type="password" placeholder="Password" required value={password} onChange={onChange} />
+                    </div>
+                    <input className="btn btn-primary w-100 mt-3" type="submit" value={newAccount ? "Create Account" : "Sign In"} />
+                    <span>{error}</span>
+                </form>
 
-            <button className="btn d-block m-auto" onClick={toggleAccount}>{newAccount ? "Sign In" : "Create Account"}</button>
-            <div className="d-flex justify-content-center">
-                <button className="btn btn-outline-info" onClick={onSocialClick} name="google">Continue with Google</button>
-                {/* <Button onClick={onSocialClick} name="google">Continue with Google</Button> */}
-                <button className="btn btn-outline-dark" onClick={onSocialClick} name="github">Continue with Github</button>
+                <button className="btn d-block m-auto" onClick={toggleAccount}>{newAccount ? "Sign In" : "Create Account"}</button>
+                <div className="d-flex justify-content-center">
+                    <button className="btn btn-outline-info" onClick={onSocialClick} name="google">Continue with Google</button>
+                    {/* <Button onClick={onSocialClick} name="google">Continue with Google</Button> */}
+                    <button className="btn btn-outline-dark" onClick={onSocialClick} name="github">Continue with Github</button>
+                </div>
             </div>
-        </div>)
+        </div>
+    )
 }
 export default Auth;

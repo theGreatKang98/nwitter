@@ -41,7 +41,7 @@ const Nweet = ({ user, nweetInfo }) => {
     );
 
     return (
-        <div className="container border rounded " > {
+        <div className="container border rounded my-5" > {
             isEditing ? (
                 <>
                     <form onSubmit={onSubmit}>
